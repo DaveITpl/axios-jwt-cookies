@@ -1,14 +1,17 @@
-import { STORAGE_KEY, isLoggedIn } from '../src'
+import CookiesStorage from "../src/cookiesStorage";
+import AuthProvider  from '../src'
 
 describe('isLoggedIn', () => {
   it('returns false if tokens are not set', () => {
     // GIVEN
-    // localStorage is empty
-    localStorage.removeItem(STORAGE_KEY)
+    // cookiesStorage is empty
+    const storage = new CookiesStorage();
+    storage.removeItem()
 
     // WHEN
     // I call isLoggedIn
-    const result = isLoggedIn()
+    const authProvider = new AuthProvider()
+    const result = authProvider.isLoggedIn()
 
     // THEN
     // I expect the result to be false
@@ -17,13 +20,15 @@ describe('isLoggedIn', () => {
 
   it('returns true if refresh token is set', () => {
     // GIVEN
-    // Both tokens are stored in localstorage
+    // Both tokens are stored in cookiesstorage
     const tokens = { accessToken: 'accesstoken', refreshToken: 'refreshtoken' }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tokens))
+    const storage = new CookiesStorage();
+    storage.setItem(JSON.stringify(tokens))
 
     // WHEN
     // I call isLoggedIn
-    const result = isLoggedIn()
+    const authProvider = new AuthProvider()
+    const result = authProvider.isLoggedIn()
 
     // THEN
     // I expect the result to be true

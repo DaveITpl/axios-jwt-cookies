@@ -1,7 +1,8 @@
 import { AxiosRequestConfig } from 'axios'
 import jwt from 'jsonwebtoken'
 
-import { authTokenInterceptor } from '../src'
+import CookiesStorage from "../src/cookiesStorage";
+import AuthProvider  from '../src'
 
 describe('authTokenInterceptor', () => {
   it('returns the original request config if refresh token is not set', async () => {
@@ -18,10 +19,11 @@ describe('authTokenInterceptor', () => {
       url: 'https://example.com',
       method: 'POST',
     }
+    const authProvider = new AuthProvider()
 
     // WHEN
     // I create the interceptor and call it
-    const interceptor = authTokenInterceptor(config)
+    const interceptor = authProvider.authTokenInterceptor(config)
 
     const result = await interceptor(exampleConfig)
 
@@ -44,9 +46,10 @@ describe('authTokenInterceptor', () => {
       'secret'
     )
 
-    // and this token is stored in local storage
+    // and this token is stored in cookies storage
     const tokens = { accessToken: expiredToken, refreshToken: 'refreshtoken' }
-    localStorage.setItem('auth-tokens-test', JSON.stringify(tokens))
+    const cookiesStorage = new CookiesStorage()
+    cookiesStorage.setItem( JSON.stringify(tokens))
 
     // and I have a config defined
     const config = {
@@ -64,7 +67,8 @@ describe('authTokenInterceptor', () => {
 
     // WHEN
     // I create the interceptor and call it
-    const interceptor = authTokenInterceptor(config)
+    const authProvider = new AuthProvider()
+    const interceptor = authProvider.authTokenInterceptor(config)
     const result = await interceptor(exampleConfig)
 
     // THEN
@@ -88,9 +92,10 @@ describe('authTokenInterceptor', () => {
       'secret'
     )
 
-    // and this token is stored in local storage
+    // and this token is stored in cookies storage
     const tokens = { accessToken: expiredToken, refreshToken: 'refreshtoken' }
-    localStorage.setItem('auth-tokens-test', JSON.stringify(tokens))
+    const cookiesStorage = new CookiesStorage()
+    cookiesStorage.setItem(JSON.stringify(tokens))
 
     // and I have a config defined
     const config = {
@@ -113,7 +118,8 @@ describe('authTokenInterceptor', () => {
 
     // WHEN
     // I create the interceptor and call it
-    const interceptor = authTokenInterceptor(config)
+    const authProvider = new AuthProvider()
+    const interceptor = authProvider.authTokenInterceptor(config)
     await interceptor(exampleConfig).catch(catchFn)
 
     // THEN
@@ -134,9 +140,10 @@ describe('authTokenInterceptor', () => {
       'secret'
     )
 
-    // and this token is stored in local storage
+    // and this token is stored in cookies storage
     const tokens = { accessToken: expiredToken, refreshToken: 'refreshtoken' }
-    localStorage.setItem('auth-tokens-test', JSON.stringify(tokens))
+    const cookiesStorage = new CookiesStorage()
+    cookiesStorage.setItem( JSON.stringify(tokens))
 
     // and I have a config defined
     const config = {
@@ -154,7 +161,8 @@ describe('authTokenInterceptor', () => {
 
     // WHEN
     // I create the interceptor and call it
-    const interceptor = authTokenInterceptor(config)
+    const authProvider = new AuthProvider()
+    const interceptor = authProvider.authTokenInterceptor(config)
     const result = await interceptor(exampleConfig)
 
     // THEN
@@ -181,9 +189,10 @@ describe('authTokenInterceptor', () => {
       'secret'
     )
 
-    // and this token is stored in local storage
+    // and this token is stored in cookies storage
     const tokens = { accessToken: expiredToken, refreshToken: 'refreshtoken' }
-    localStorage.setItem('auth-tokens-test', JSON.stringify(tokens))
+    const cookiesStorage = new CookiesStorage()
+    cookiesStorage.setItem( JSON.stringify(tokens))
 
     // and I have a config defined
     const config = {
@@ -205,7 +214,8 @@ describe('authTokenInterceptor', () => {
 
     // WHEN
     // I create 3 interceptor and call them all at once
-    const interceptor = authTokenInterceptor(config)
+    const authProvider = new AuthProvider()
+    const interceptor = authProvider.authTokenInterceptor(config)
     const results = await Promise.all([
       interceptor(exampleConfig),
       interceptor(exampleConfig),

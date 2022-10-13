@@ -1,47 +1,54 @@
-import { STORAGE_KEY, setAccessToken } from '../src'
+import CookiesStorage from "../src/cookiesStorage";
+import AuthProvider  from '../src'
 
 describe('setAccessToken', () => {
   it('throws an error if there are no tokens stored', () => {
     // GIVEN
-    // localStorage is empty
-    localStorage.removeItem(STORAGE_KEY)
+    // cookiesStorage is empty
+    const storage = new CookiesStorage();
+    storage.removeItem()
 
     // WHEN
     // I call setAccessToken
     // THEN
     // I expect an error to have been thrown
+    const authProvider = new AuthProvider()
     expect(() => {
-      setAccessToken('accesstoken')
+      authProvider.setAccessToken('accesstoken')
     }).toThrow('Unable to update access token since there are not tokens currently stored')
   })
 
   it('throws an error if the stored tokens cannot be parsed', () => {
     // GIVEN
-    // localStorage is empty
-    localStorage.setItem(STORAGE_KEY, 'totallynotjson')
+    // cookiesStorage is empty
+    const storage = new CookiesStorage();
+    storage.setItem('totallynotjson')
 
     // WHEN
     // I call setAuthTokens
     // THEN
     // I expect an error to be thrown
+    const authProvider = new AuthProvider()
     expect(() => {
-      setAccessToken('accesstoken')
+      authProvider.setAccessToken('accesstoken')
     }).toThrow('Failed to parse auth tokens: totallynotjson')
   })
 
-  it('stores the tokens in localstorage', () => {
+  it('stores the tokens in cookiesstorage', () => {
     // GIVEN
-    // localStorage is empty
+    // cookiesStorage is empty
     const tokens = { accessToken: 'accesstoken', refreshToken: 'refreshtoken' }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tokens))
+    const storage = new CookiesStorage();
+    storage.setItem(JSON.stringify(tokens))
 
     // WHEN
     // I call setAccessToken
-    setAccessToken('newaccesstoken')
+    const authProvider = new AuthProvider()
+    authProvider.setAccessToken('newaccesstoken')
 
     // THEN
     // I expect the stored access token to have been updated
-    const storedTokens = localStorage.getItem(STORAGE_KEY) as string
+    const storedTokens = storage.getItem() as string
     expect(JSON.parse(storedTokens)).toEqual({ accessToken: 'newaccesstoken', refreshToken: 'refreshtoken' })
   })
 })

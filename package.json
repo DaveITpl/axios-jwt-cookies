@@ -1,32 +1,32 @@
 {
   "name": "axios-jwt",
-  "version": "2.0.1",
+  "version": "0.0.1",
   "description": "Axios interceptor to store, use, and refresh tokens for authentication.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jetbridge/axios-jwt"
+    "url": "git+https://github.com/DaveITpl/axios-jwt-cookies"
   },
-  "homepage": "https://github.com/jetbridge/axios-jwt",
-  "author": "JetBridge Inc.",
+  "homepage": "https://github.com/DaveITpl/axios-jwt-cookies",
+  "author": "JetBridge Inc. & DaveITpl",
   "license": "WTFPL",
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/jest": "^26.0.22",
-    "@types/jsonwebtoken": "^8.5.1",
+    "@types/jest": "^29.1.2",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/jwt-decode": "^3.1.0",
-    "@typescript-eslint/eslint-plugin": "^4.21.0",
-    "@typescript-eslint/parser": "^4.21.0",
-    "eslint": "^7.24.0",
-    "jest": "^26.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
+    "jest": "^29.1.2",
     "jsonwebtoken": "^8.5.1",
-    "prettier": "^2.2.1",
-    "ts-jest": "^26.5.4",
-    "typescript": "^4.6.4"
+    "prettier": "^2.7.1",
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "@react-native-async-storage/async-storage": "1.15.17",
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "axios": "^0.27.0"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "authorization",
     "header",
     "typescript",
-    "ts"
+    "ts",
+    "cookies"
   ]
 }
