@@ -1,5 +1,5 @@
 {
-  "name": "axios-jwt",
+  "name": "axios-jwt-cookies",
   "version": "0.0.1",
   "description": "Axios interceptor to store, use, and refresh tokens for authentication.",
   "main": "dist/index.js",
