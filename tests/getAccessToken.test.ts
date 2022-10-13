@@ -1,14 +1,17 @@
-import { STORAGE_KEY, getAccessToken } from '../src'
+import CookiesStorage from "../src/cookiesStorage";
+import AuthProvider  from '../src'
 
 describe('getAccessToken', () => {
   it('returns undefined if tokens are not set', () => {
     // GIVEN
-    // localStorage is empty
-    localStorage.removeItem(STORAGE_KEY)
+    // cookiesStorage is empty
+    const storage = new CookiesStorage();
+    storage.removeItem()
 
     // WHEN
     // I call getAccessToken
-    const result = getAccessToken()
+    const authProvider = new AuthProvider()
+    const result = authProvider.getAccessToken()
 
     // THEN
     // I expect the result to be undefined
@@ -17,13 +20,15 @@ describe('getAccessToken', () => {
 
   it('returns the access token is it is set', () => {
     // GIVEN
-    // Both tokens are stored in localstorage
+    // Both tokens are stored in cookiesstorage
     const tokens = { accessToken: 'accesstoken', refreshToken: 'refreshtoken' }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tokens))
+    const storage = new CookiesStorage();
+    storage.setItem(JSON.stringify(tokens))
 
     // WHEN
     // I call getAccessToken
-    const result = getAccessToken()
+    const authProvider = new AuthProvider()
+    const result = authProvider.getAccessToken()
 
     // THEN
     // I expect the result to be the supplied access token
